@@ -50,7 +50,7 @@ namespace AssetStudioGUI
             });
         }
 
-        private static int ExtractBundleFile(string bundleFileName, EndianBinaryReader reader)
+        private static int ExtractBundleFile(string bundleFileName, AssetReader reader)
         {
             StatusStripUpdate($"Decompressing {Path.GetFileName(bundleFileName)} ...");
             var bundleFile = new BundleFile(reader, bundleFileName);
@@ -63,7 +63,7 @@ namespace AssetStudioGUI
             return 0;
         }
 
-        private static int ExtractWebDataFile(string webFileName, EndianBinaryReader reader)
+        private static int ExtractWebDataFile(string webFileName, AssetReader reader)
         {
             StatusStripUpdate($"Decompressing {Path.GetFileName(webFileName)} ...");
             var webFile = new WebFile(reader);

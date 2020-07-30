@@ -9,7 +9,7 @@ namespace AssetStudio
     public class SerializedFile
     {
         public AssetsManager assetsManager;
-        public EndianBinaryReader reader;
+        public AssetReader reader;
         public string fullName;
         public string originalPath;
         public string fileName;
@@ -29,7 +29,7 @@ namespace AssetStudio
         private List<LocalSerializedObjectIdentifier> m_ScriptTypes;
         public List<FileIdentifier> m_Externals;
 
-        public SerializedFile(AssetsManager assetsManager, string fullName, EndianBinaryReader reader)
+        public SerializedFile(AssetsManager assetsManager, string fullName, AssetReader reader)
         {
             this.assetsManager = assetsManager;
             this.reader = reader;
@@ -359,7 +359,7 @@ namespace AssetStudio
             ObjectsDic.Add(obj.m_PathID, obj);
         }
 
-        public static bool IsSerializedFile(EndianBinaryReader reader)
+        public static bool IsSerializedFile(AssetReader reader)
         {
             var fileSize = reader.BaseStream.Length;
             if (fileSize < 20)

@@ -57,20 +57,21 @@ namespace AssetStudio
             return selectFile.Distinct().ToArray();
         }
 
-        public static FileType CheckFileType(Stream stream, out EndianBinaryReader reader)
+        public static FileType CheckFileType(Stream stream, out AssetReader reader)
         {
-            reader = new EndianBinaryReader(stream);
+            reader = new AssetReader(stream);
             return CheckFileType(reader);
         }
 
-        public static FileType CheckFileType(string fileName, out EndianBinaryReader reader)
+        public static FileType CheckFileType(string fileName, out AssetReader reader)
         {
-            reader = new EndianBinaryReader(File.OpenRead(fileName));
+            reader = new AssetReader(File.OpenRead(fileName));
             return CheckFileType(reader);
         }
 
-        private static FileType CheckFileType(EndianBinaryReader reader)
+        private static FileType CheckFileType(AssetReader reader)
         {
+            reader.Position = 0;
             var signature = reader.ReadStringToNull(20);
             reader.Position = 0;
             switch (signature)

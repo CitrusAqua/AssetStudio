@@ -72,7 +72,7 @@ namespace AssetStudio
             }
         }
 
-        private void LoadAssetsFile(string fullName, EndianBinaryReader reader)
+        private void LoadAssetsFile(string fullName, AssetReader reader)
         {
             var fileName = Path.GetFileName(fullName);
             if (!assetsFileListHash.Contains(fileName))
@@ -120,7 +120,7 @@ namespace AssetStudio
             }
         }
 
-        private void LoadAssetsFromMemory(string fullName, EndianBinaryReader reader, string originalPath, string unityVersion = null)
+        private void LoadAssetsFromMemory(string fullName, AssetReader reader, string originalPath, string unityVersion = null)
         {
             var fileName = Path.GetFileName(fullName);
             if (!assetsFileListHash.Contains(fileName))
@@ -144,7 +144,7 @@ namespace AssetStudio
             }
         }
 
-        private void LoadBundleFile(string fullName, EndianBinaryReader reader, string parentPath = null)
+        private void LoadBundleFile(string fullName, AssetReader reader, string parentPath = null)
         {
             var fileName = Path.GetFileName(fullName);
             Logger.Info("Loading " + fileName);
@@ -153,7 +153,7 @@ namespace AssetStudio
                 var bundleFile = new BundleFile(reader, fullName);
                 foreach (var file in bundleFile.fileList)
                 {
-                    var subReader = new EndianBinaryReader(file.stream);
+                    var subReader = new AssetReader(file.stream);
                     if (SerializedFile.IsSerializedFile(subReader))
                     {
                         var dummyPath = Path.GetDirectoryName(fullName) + Path.DirectorySeparatorChar + file.fileName;
@@ -180,7 +180,7 @@ namespace AssetStudio
             }
         }
 
-        private void LoadWebFile(string fullName, EndianBinaryReader reader)
+        private void LoadWebFile(string fullName, AssetReader reader)
         {
             var fileName = Path.GetFileName(fullName);
             Logger.Info("Loading " + fileName);

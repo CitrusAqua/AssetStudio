@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AssetStudio
 {
-    public class ObjectReader : EndianBinaryReader
+    public class ObjectReader : AssetReader
     {
         public SerializedFile assetsFile;
         public long m_PathID;
@@ -20,7 +20,7 @@ namespace AssetStudio
         public int[] version => assetsFile.version;
         public BuildType buildType => assetsFile.buildType;
 
-        public ObjectReader(EndianBinaryReader reader, SerializedFile assetsFile, ObjectInfo objectInfo) : base(reader.BaseStream, reader.endian)
+        public ObjectReader(AssetReader reader, SerializedFile assetsFile, ObjectInfo objectInfo) : base(reader.BaseStream, reader.endian)
         {
             this.assetsFile = assetsFile;
             m_PathID = objectInfo.m_PathID;

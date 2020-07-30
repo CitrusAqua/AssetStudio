@@ -21,7 +21,7 @@ namespace AssetStudio
             public string path;
         }
 
-        public WebFile(EndianBinaryReader reader)
+        public WebFile(AssetReader reader)
         {
             var magic = reader.ReadBytes(2);
             reader.Position = 0;

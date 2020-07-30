@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace AssetStudio
 {
@@ -11,19 +12,33 @@ namespace AssetStudio
         BigEndian
     }
 
-    public class EndianBinaryReader : BinaryReader
+    public class AssetReader : BinaryReader
     {
         public EndianType endian;
+        private int offset;
 
-        public EndianBinaryReader(Stream stream, EndianType endian = EndianType.BigEndian) : base(stream)
+        public AssetReader(Stream stream, EndianType endian = EndianType.BigEndian) : base(stream)
         {
             this.endian = endian;
+
+            // Check for asset file type: 8 bytes leading 0s or not.
+            var leadingBytes = this.ReadBytes(13);
+            var target = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, (byte)'U', (byte)'n', (byte)'i', (byte)'t', (byte)'y' };
+            if (leadingBytes.SequenceEqual(target))
+            {
+                this.offset = 8;
+            }
+            else
+            {
+                this.offset = 0;
+            }
+            this.Position = this.offset;
         }
 
         public long Position
         {
-            get => BaseStream.Position;
-            set => BaseStream.Position = value;
+            get => BaseStream.Position - offset;
+            set => BaseStream.Position = value + offset;
         }
 
         public override short ReadInt16()

@@ -41,7 +41,7 @@ namespace AssetStudio
 
         public StreamFile[] fileList;
 
-        public BundleFile(EndianBinaryReader reader, string path)
+        public BundleFile(AssetReader reader, string path)
         {
             m_Header = new Header();
             m_Header.signature = reader.ReadStringToNull();
@@ -70,7 +70,7 @@ namespace AssetStudio
             }
         }
 
-        private void ReadHeaderAndBlocksInfo(EndianBinaryReader reader)
+        private void ReadHeaderAndBlocksInfo(AssetReader reader)
         {
             var isCompressed = m_Header.signature == "UnityWeb";
             m_Header.version = reader.ReadUInt32();
@@ -127,7 +127,7 @@ namespace AssetStudio
             return blocksStream;
         }
 
-        private void ReadBlocksAndDirectory(EndianBinaryReader reader, Stream blocksStream)
+        private void ReadBlocksAndDirectory(AssetReader reader, Stream blocksStream)
         {
             foreach (var blockInfo in m_BlocksInfo)
             {
@@ -145,7 +145,7 @@ namespace AssetStudio
                 blocksStream.Write(uncompressedBytes, 0, uncompressedBytes.Length);
             }
             blocksStream.Position = 0;
-            var blocksReader = new EndianBinaryReader(blocksStream);
+            var blocksReader = new AssetReader(blocksStream);
             var nodesCount = blocksReader.ReadInt32();
             m_DirectoryInfo = new Node[nodesCount];
             for (int i = 0; i < nodesCount; i++)
@@ -186,7 +186,7 @@ namespace AssetStudio
             }
         }
 
-        private void ReadHeader(EndianBinaryReader reader)
+        private void ReadHeader(AssetReader reader)
         {
             m_Header.version = reader.ReadUInt32();
             m_Header.unityVersion = reader.ReadStringToNull();
@@ -197,7 +197,7 @@ namespace AssetStudio
             m_Header.flags = reader.ReadUInt32();
         }
 
-        private void ReadBlocksInfoAndDirectory(EndianBinaryReader reader)
+        private void ReadBlocksInfoAndDirectory(AssetReader reader)
         {
             byte[] blocksInfoBytes;
             if ((m_Header.flags & 0x80) != 0) //kArchiveBlocksInfoAtTheEnd
@@ -242,7 +242,7 @@ namespace AssetStudio
                         break;
                     }
             }
-            using (var blocksInfoReader = new EndianBinaryReader(blocksInfoUncompresseddStream))
+            using (var blocksInfoReader = new AssetReader(blocksInfoUncompresseddStream))
             {
                 var uncompressedDataHash = blocksInfoReader.ReadBytes(16);
                 var blocksInfoCount = blocksInfoReader.ReadInt32();
@@ -272,7 +272,7 @@ namespace AssetStudio
             }
         }
 
-        private void ReadBlocks(EndianBinaryReader reader, Stream blocksStream)
+        private void ReadBlocks(AssetReader reader, Stream blocksStream)
         {
             foreach (var blockInfo in m_BlocksInfo)
             {

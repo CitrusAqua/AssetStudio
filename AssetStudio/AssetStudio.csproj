@@ -115,7 +115,7 @@
     <Compile Include="Classes\VideoClip.cs" />
     <Compile Include="ClassIDType.cs" />
     <Compile Include="CommonString.cs" />
-    <Compile Include="EndianBinaryReader.cs" />
+    <Compile Include="AssetReader.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
