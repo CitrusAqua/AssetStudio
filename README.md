@@ -1,3 +1,11 @@
+This is an adapted version of AssetStudio for Shining Nikki.
+
+Forked from AssetStudio.
+
+Below is the original README:
+
+-----
+
 # AssetStudio
 [![Build status](https://ci.appveyor.com/api/projects/status/rnu7l90422pdewx4?svg=true)](https://ci.appveyor.com/project/Perfare/assetstudio/branch/master/artifacts)
 
